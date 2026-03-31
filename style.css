@@ -1,1 +1,114 @@
+/* style.css - Página de WiFi Fraco - Escola */
 
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #0f172a 0%, #1e2937 100%);
+    color: #e2e8f0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.container {
+    max-width: 600px;
+    background: rgba(15, 23, 42, 0.95);
+    border-radius: 20px;
+    padding: 40px 30px;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+    border: 1px solid #334155;
+}
+
+h1 {
+    font-size: 2.8rem;
+    margin-bottom: 15px;
+    color: #f87171;
+}
+
+.subtitle {
+    font-size: 1.3rem;
+    color: #94a3b8;
+    margin-bottom: 30px;
+}
+
+.wifi-icon {
+    font-size: 6rem;
+    margin-bottom: 20px;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+}
+
+.dicas {
+    text-align: left;
+    margin: 35px 0;
+}
+
+.dicas h2 {
+    color: #60a5fa;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+}
+
+.dica {
+    background: rgba(30, 41, 59, 0.8);
+    padding: 15px 20px;
+    margin-bottom: 12px;
+    border-radius: 12px;
+    border-left: 5px solid #60a5fa;
+    transition: all 0.3s ease;
+}
+
+.dica:hover {
+    transform: translateX(10px);
+    background: rgba(51, 65, 85, 0.9);
+}
+
+.dica strong {
+    color: #93c5fd;
+}
+
+.footer {
+    margin-top: 40px;
+    font-size: 0.95rem;
+    color: #64748b;
+}
+
+.btn {
+    display: inline-block;
+    background: #3b82f6;
+    color: white;
+    padding: 14px 32px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: bold;
+    margin-top: 20px;
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    background: #2563eb;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(59, 130, 246, 0.4);
+}
+
+/* Responsivo */
+@media (max-width: 480px) {
+    h1 {
+        font-size: 2.2rem;
+    }
+    .container {
+        padding: 30px 20px;
+    }
+}
