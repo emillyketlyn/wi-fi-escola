@@ -1,1 +1,149 @@
 
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagnóstico WiFi - Escola</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        h1 {
+            margin-bottom: 10px;
+        }
+        .result {
+            margin: 20px 0;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            font-size: 1.2em;
+        }
+        button {
+            background: #00ff88;
+            color: #000;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1em;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 10px;
+        }
+        button:hover {
+            background: #00cc6a;
+        }
+        .dicas {
+            text-align: left;
+            margin-top: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+        }
+        ul {
+            text-align: left;
+        }
+        .status {
+            font-weight: bold;
+            color: #ffd700;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 Diagnóstico de WiFi - Escola</h1>
+        <p>Internet lenta ou sinal fraco? Teste aqui e veja as dicas para melhorar!</p>
+
+        <button onclick="iniciarTeste()">Iniciar Teste de Velocidade</button>
+
+        <div id="resultado" class="result" style="display: none;">
+            <p><strong>Velocidade de Download:</strong> <span id="download">Calculando...</span></p>
+            <p><strong>Latência (Ping):</strong> <span id="ping">Calculando...</span></p>
+            <p class="status" id="status"></p>
+        </div>
+
+        <div class="dicas">
+            <h2>💡 Dicas para melhorar o WiFi na escola</h2>
+            <ul>
+                <li><strong>Posicione o roteador:</strong> No centro da sala, elevado e longe de paredes grossas, micro-ondas ou armários.</li>
+                <li><strong>Reduza dispositivos conectados:</strong> Muitos alunos usando ao mesmo tempo congestionam a rede. Peça para desconectarem quando não usar.</li>
+                <li><strong>Use a banda de 5 GHz:</strong> Se o roteador tiver, é mais rápida e menos interferida que a de 2.4 GHz.</li>
+                <li><strong>Reinicie o roteador:</strong> Desligue da tomada por 30 segundos toda manhã ou quando estiver muito lento.</li>
+                <li><strong>Evite interferências:</strong> Mantenha longe de telefones sem fio, babás eletrônicas e outros roteadores próximos.</li>
+                <li><strong>Atualize o firmware:</strong> Peça ao TI da escola para atualizar o roteador.</li>
+                <li><strong>Teste em horários diferentes:</strong> Anote os resultados em horários de pico (recreio, aula de informática) e fora deles.</li>
+            </ul>
+            <p><strong>Se nada resolver:</strong> Registre os testes e envie para a coordenação/TI com data, horário e velocidade medida.</p>
+        </div>
+    </div>
+
+    <script>
+        async function medirPing() {
+            const start = Date.now();
+            try {
+                await fetch('https://www.google.com/favicon.ico', { mode: 'no-cors' });
+            } catch (e) {}
+            return Date.now() - start;
+        }
+
+        async function medirDownload() {
+            const imageUrl = 'https://picsum.photos/2000/2000'; // Imagem grande para teste realista
+            const startTime = Date.now();
+            
+            try {
+                const response = await fetch(imageUrl);
+                const blob = await response.blob();
+                const endTime = Date.now();
+                
+                const duration = (endTime - startTime) / 1000; // em segundos
+                const bitsLoaded = blob.size * 8;
+                const speedMbps = (bitsLoaded / duration / 1024 / 1024).toFixed(2);
+                
+                return speedMbps;
+            } catch (error) {
+                return "Erro na conexão";
+            }
+        }
+
+        async function iniciarTeste() {
+            const resultadoDiv = document.getElementById('resultado');
+            resultadoDiv.style.display = 'block';
+            
+            document.getElementById('download').textContent = 'Testando...';
+            document.getElementById('ping').textContent = 'Testando...';
+            document.getElementById('status').textContent = '';
+
+            // Medir Ping
+            const ping = await medirPing();
+            document.getElementById('ping').textContent = ping + ' ms';
+
+            // Medir Download
+            const velocidade = await medirDownload();
+            document.getElementById('download').textContent = velocidade + ' Mbps';
+
+            // Avaliação simples
+            let statusMsg = '';
+            if (velocidade < 5) {
+                statusMsg = '🚨 Sinal muito fraco! Muitos dispositivos ou interferência.';
+            } else if (velocidade < 15) {
+                statusMsg = '⚠️ Conexão lenta. Recomendo reiniciar o roteador e reduzir dispositivos.';
+            } else {
+                statusMsg = '✅ Conexão razoável para navegação escolar.';
+            }
+            document.getElementById('status').innerHTML = statusMsg;
+        }
+    </script>
+</body>
+</html>
