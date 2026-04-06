@@ -1,145 +1,179 @@
 
-// =============================================
-// DIAGNÓSTICO DE WIFI - ESCOLA (JavaScript Puro)
-// =============================================
+/* style.css - Versão Melhorada 2026 */
 
-const WiFiDiagnostico = {
-    resultados: {},
-
-    // Medir latência (Ping) com várias tentativas
-    async medirPing(tentativas = 5) {
-        let total = 0;
-        let sucessos = 0;
-
-        for (let i = 0; i < tentativas; i++) {
-            const inicio = Date.now();
-            try {
-                await fetch('https://www.google.com/favicon.ico', {
-                    mode: 'no-cors',
-                    cache: 'no-cache'
-                });
-                const tempo = Date.now() - inicio;
-                total += tempo;
-                sucessos++;
-            } catch (e) {
-                console.log(`Tentativa ${i+1} falhou`);
-            }
-            // Pequeno delay entre tentativas
-            await new Promise(r => setTimeout(r, 300));
-        }
-
-        const pingMedio = sucessos > 0 ? Math.round(total / sucessos) : "Erro";
-        return { ping: pingMedio, tentativas: sucessos };
-    },
-
-    // Medir velocidade de download aproximada
-    async medirDownload() {
-        const imagemTeste = 'https://picsum.photos/3000/3000'; // Imagem grande (~2-3MB)
-        const inicio = Date.now();
-
-        try {
-            const response = await fetch(imagemTeste, { cache: 'no-cache' });
-            const blob = await response.blob();
-            const fim = Date.now();
-
-            const duracaoSegundos = (fim - inicio) / 1000;
-            const tamanhoBits = blob.size * 8;
-            const velocidadeMbps = (tamanhoBits / duracaoSegundos / 1024 / 1024).toFixed(2);
-
-            return {
-                velocidade: parseFloat(velocidadeMbps),
-                tamanhoMB: (blob.size / 1024 / 1024).toFixed(2)
-            };
-        } catch (error) {
-            console.error("Erro no teste de download:", error);
-            return { velocidade: 0, erro: "Falha na conexão" };
-        }
-    },
-
-    // Avaliação da qualidade da conexão
-    avaliarQualidade(velocidade, ping) {
-        if (velocidade === 0) return { status: "ERRO", cor: "red", mensagem: "Sem conexão com a internet" };
-
-        if (velocidade < 3) {
-            return {
-                status: "MUITO RUIM",
-                cor: "red",
-                mensagem: "Internet muito fraca. Muitos dispositivos conectados ou sinal ruim."
-            };
-        }
-        if (velocidade < 10) {
-            return {
-                status: "RUIM",
-                cor: "orange",
-                mensagem: "Conexão lenta. Recomenda-se reiniciar o roteador e limitar o número de dispositivos."
-            };
-        }
-        if (velocidade < 25) {
-            return {
-                status: "RAZOÁVEL",
-                cor: "yellow",
-                mensagem: "Velocidade aceitável para navegação básica, mas ruim para videoaulas."
-            };
-        }
-        return {
-            status: "BOA",
-            cor: "lime",
-            mensagem: "Conexão boa para uso escolar."
-        };
-    },
-
-    // Função principal para executar o teste completo
-    async executarTesteCompleto() {
-        console.clear();
-        console.log("%c🔍 Iniciando Diagnóstico de WiFi da Escola...", "color: cyan; font-size: 16px;");
-
-        // 1. Teste de Ping
-        console.log("📡 Medindo latência (Ping)...");
-        const pingResult = await this.medirPing(6);
-
-        // 2. Teste de Download
-        console.log("⬇️ Medindo velocidade de download...");
-        const downloadResult = await this.medirDownload();
-
-        // 3. Avaliação
-        const avaliacao = this.avaliarQualidade(downloadResult.velocidade, pingResult.ping);
-
-        // Resultados finais
-        this.resultados = {
-            ping: pingResult.ping,
-            downloadMbps: downloadResult.velocidade,
-            tamanhoTesteMB: downloadResult.tamanhoMB,
-            qualidade: avaliacao.status,
-            recomendacao: avaliacao.mensagem,
-            data: new Date().toLocaleString('pt-BR')
-        };
-
-        console.log("%c✅ Teste Concluído!", "color: lime; font-weight: bold;");
-        console.table(this.resultados);
-
-        // Mensagem amigável para o usuário
-        alert(`📊 Diagnóstico WiFi - Escola
-
-Velocidade de Download: ${this.resultados.downloadMbps} Mbps
-Latência (Ping): ${this.resultados.ping} ms
-Qualidade: ${this.resultados.qualidade}
-
-${this.resultados.recomendacao}
-
-✅ Salve este resultado e envie para o TI da escola!`);
-        
-        return this.resultados;
-    }
-};
-
-// ======================
-// COMO USAR:
-// ======================
-
-// Basta chamar esta função quando quiser rodar o teste:
-async function testarWifiEscola() {
-    await WiFiDiagnostico.executarTesteCompleto();
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-// Exemplo de uso direto no console do navegador:
-// testarWifiEscola();
+body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: linear-gradient(135deg, #0f172a 0%, #1e2937 100%);
+    color: #e2e8f0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    line-height: 1.5;
+}
+
+.container {
+    max-width: 680px;
+    background: rgba(15, 23, 42, 0.97);
+    border-radius: 28px;
+    padding: 50px 40px;
+    text-align: center;
+    box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.75);
+    border: 1px solid #334155;
+    backdrop-filter: blur(12px);
+}
+
+.wifi-header {
+    margin-bottom: 25px;
+}
+
+.wifi-icon {
+    font-size: 8rem;
+    margin-bottom: 10px;
+    display: block;
+    animation: wifiPulse 4s infinite ease-in-out;
+    filter: drop-shadow(0 0 25px #60a5fa);
+}
+
+.signal-bar {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    margin: 10px 0 30px;
+}
+
+.bar {
+    width: 12px;
+    background: #334155;
+    border-radius: 9999px;
+    animation: signalAnim 1.8s infinite ease-in-out;
+}
+
+.bar:nth-child(2) { height: 18px; animation-delay: 0.2s; }
+.bar:nth-child(3) { height: 28px; animation-delay: 0.4s; }
+.bar:nth-child(4) { height: 38px; animation-delay: 0.6s; background: #60a5fa; }
+
+@keyframes wifiPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.06); }
+}
+
+@keyframes signalAnim {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+}
+
+h1 {
+    font-size: 2.8rem;
+    font-weight: 700;
+    margin-bottom: 14px;
+    background: linear-gradient(to right, #60a5fa, #a5b4fc);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.subtitle {
+    font-size: 1.32rem;
+    color: #94a3b8;
+    margin-bottom: 35px;
+}
+
+.dicas {
+    text-align: left;
+    margin-bottom: 40px;
+}
+
+.dica {
+    background: rgba(30, 41, 59, 0.9);
+    padding: 19px 24px;
+    margin-bottom: 16px;
+    border-radius: 18px;
+    border-left: 7px solid #3b82f6;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    transition: all 0.4s ease;
+}
+
+.dica:hover {
+    transform: translateX(15px);
+    background: rgba(51, 65, 85, 0.95);
+    box-shadow: 0 12px 20px rgba(59, 130, 246, 0.25);
+}
+
+.dica-number {
+    background: #1e2937;
+    color: #60a5fa;
+    min-width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+.actions {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 30px;
+}
+
+.btn {
+    padding: 16px 36px;
+    border: none;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    min-width: 200px;
+}
+
+.btn.primary {
+    background: linear-gradient(90deg, #3b82f6, #60a5fa);
+    color: white;
+    box-shadow: 0 10px 25px rgba(59, 130, 246, 0.4);
+}
+
+.btn.primary:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(59, 130, 246, 0.55);
+}
+
+.btn.secondary {
+    background: transparent;
+    color: #93c5fd;
+    border: 2px solid #60a5fa;
+}
+
+.btn.secondary:hover {
+    background: rgba(96, 165, 250, 0.15);
+    transform: translateY(-3px);
+}
+
+.footer {
+    color: #64748b;
+    font-size: 0.98rem;
+    padding-top: 25px;
+    border-top: 1px solid #334155;
+}
+
+/* Responsivo */
+@media (max-width: 540px) {
+    .container { padding: 40px 25px; }
+    h1 { font-size: 2.3rem; }
+    .wifi-icon { font-size: 6.5rem; }
+    .actions { flex-direction: column; align-items: center; }
+}
