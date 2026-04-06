@@ -1,4 +1,4 @@
-/* style.css - Página de WiFi Fraco - Escola */
+/* style.css - Versão Melhorada 2026 */
 
 * {
     margin: 0;
@@ -7,7 +7,7 @@
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Segoe UI', system-ui, sans-serif;
     background: linear-gradient(135deg, #0f172a 0%, #1e2937 100%);
     color: #e2e8f0;
     min-height: 100vh;
@@ -15,100 +15,164 @@ body {
     align-items: center;
     justify-content: center;
     padding: 20px;
+    line-height: 1.5;
 }
 
 .container {
-    max-width: 600px;
-    background: rgba(15, 23, 42, 0.95);
-    border-radius: 20px;
-    padding: 40px 30px;
+    max-width: 680px;
+    background: rgba(15, 23, 42, 0.97);
+    border-radius: 28px;
+    padding: 50px 40px;
     text-align: center;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+    box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.75);
     border: 1px solid #334155;
+    backdrop-filter: blur(12px);
+}
+
+.wifi-header {
+    margin-bottom: 25px;
+}
+
+.wifi-icon {
+    font-size: 8rem;
+    margin-bottom: 10px;
+    display: block;
+    animation: wifiPulse 4s infinite ease-in-out;
+    filter: drop-shadow(0 0 25px #60a5fa);
+}
+
+.signal-bar {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    margin: 10px 0 30px;
+}
+
+.bar {
+    width: 12px;
+    background: #334155;
+    border-radius: 9999px;
+    animation: signalAnim 1.8s infinite ease-in-out;
+}
+
+.bar:nth-child(2) { height: 18px; animation-delay: 0.2s; }
+.bar:nth-child(3) { height: 28px; animation-delay: 0.4s; }
+.bar:nth-child(4) { height: 38px; animation-delay: 0.6s; background: #60a5fa; }
+
+@keyframes wifiPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.06); }
+}
+
+@keyframes signalAnim {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
 }
 
 h1 {
     font-size: 2.8rem;
-    margin-bottom: 15px;
-    color: #f87171;
+    font-weight: 700;
+    margin-bottom: 14px;
+    background: linear-gradient(to right, #60a5fa, #a5b4fc);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .subtitle {
-    font-size: 1.3rem;
+    font-size: 1.32rem;
     color: #94a3b8;
-    margin-bottom: 30px;
-}
-
-.wifi-icon {
-    font-size: 6rem;
-    margin-bottom: 20px;
-    animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-    0%, 100% { opacity: 0.6; }
-    50% { opacity: 1; }
+    margin-bottom: 35px;
 }
 
 .dicas {
     text-align: left;
-    margin: 35px 0;
-}
-
-.dicas h2 {
-    color: #60a5fa;
-    margin-bottom: 20px;
-    font-size: 1.5rem;
+    margin-bottom: 40px;
 }
 
 .dica {
-    background: rgba(30, 41, 59, 0.8);
-    padding: 15px 20px;
-    margin-bottom: 12px;
-    border-radius: 12px;
-    border-left: 5px solid #60a5fa;
-    transition: all 0.3s ease;
+    background: rgba(30, 41, 59, 0.9);
+    padding: 19px 24px;
+    margin-bottom: 16px;
+    border-radius: 18px;
+    border-left: 7px solid #3b82f6;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    transition: all 0.4s ease;
 }
 
 .dica:hover {
-    transform: translateX(10px);
-    background: rgba(51, 65, 85, 0.9);
+    transform: translateX(15px);
+    background: rgba(51, 65, 85, 0.95);
+    box-shadow: 0 12px 20px rgba(59, 130, 246, 0.25);
 }
 
-.dica strong {
-    color: #93c5fd;
+.dica-number {
+    background: #1e2937;
+    color: #60a5fa;
+    min-width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.2rem;
+    flex-shrink: 0;
 }
 
-.footer {
-    margin-top: 40px;
-    font-size: 0.95rem;
-    color: #64748b;
+.actions {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 30px;
 }
 
 .btn {
-    display: inline-block;
-    background: #3b82f6;
-    color: white;
-    padding: 14px 32px;
+    padding: 16px 36px;
+    border: none;
     border-radius: 50px;
-    text-decoration: none;
-    font-weight: bold;
-    margin-top: 20px;
-    transition: all 0.3s ease;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    min-width: 200px;
 }
 
-.btn:hover {
-    background: #2563eb;
+.btn.primary {
+    background: linear-gradient(90deg, #3b82f6, #60a5fa);
+    color: white;
+    box-shadow: 0 10px 25px rgba(59, 130, 246, 0.4);
+}
+
+.btn.primary:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(59, 130, 246, 0.55);
+}
+
+.btn.secondary {
+    background: transparent;
+    color: #93c5fd;
+    border: 2px solid #60a5fa;
+}
+
+.btn.secondary:hover {
+    background: rgba(96, 165, 250, 0.15);
     transform: translateY(-3px);
-    box-shadow: 0 10px 20px rgba(59, 130, 246, 0.4);
+}
+
+.footer {
+    color: #64748b;
+    font-size: 0.98rem;
+    padding-top: 25px;
+    border-top: 1px solid #334155;
 }
 
 /* Responsivo */
-@media (max-width: 480px) {
-    h1 {
-        font-size: 2.2rem;
-    }
-    .container {
-        padding: 30px 20px;
-    }
+@media (max-width: 540px) {
+    .container { padding: 40px 25px; }
+    h1 { font-size: 2.3rem; }
+    .wifi-icon { font-size: 6.5rem; }
+    .actions { flex-direction: column; align-items: center; }
 }
