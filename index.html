@@ -9,7 +9,7 @@
 <body>
     <div class="container">
         <div class="wifi-header">
-            <div class="wifi-icon">📶</div>
+            <div class="wifi-icon" id="wifi-icon">📶</div>
             <div class="signal-bars">
                 <div class="bar"></div>
                 <div class="bar"></div>
@@ -19,7 +19,7 @@
         </div>
 
         <h1>WiFi Fraco na Escola</h1>
-        <p class="subtitle">A internet está lenta hoje. Use estas dicas para melhorar sua conexão:</p>
+        <p class="subtitle">A internet está lenta hoje. Aqui vão as melhores dicas para melhorar sua conexão:</p>
 
         <div class="dicas" id="dicas-container"></div>
 
@@ -27,13 +27,13 @@
             <button onclick="recarregarPagina()" class="btn primary">
                 🔄 Recarregar Página
             </button>
-            <button onclick="testarVelocidade()" class="btn secondary">
-                📡 Testar Velocidade
+            <button onclick="testarVelocidade()" id="test-btn" class="btn secondary">
+                📡 Testar Minha Velocidade
             </button>
         </div>
 
         <div class="footer">
-            Ainda com problema? Avise o professor ou a coordenação de TI.<br>
+            Problema persiste? Avise o professor ou a equipe de TI da escola.<br>
             <small>Escola Municipal • Curitiba • 2026</small>
         </div>
     </div>
