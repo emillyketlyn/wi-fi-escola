@@ -1,179 +1,46 @@
+// script.js - WiFi Escola Melhorado
 
-/* style.css - Versão Melhorada 2026 */
+const dicas = [
+    { num: "1", texto: "Fique mais perto do roteador ou ponto de acesso WiFi" },
+    { num: "2", texto: "Desconecte outros celulares e dispositivos que não estão usando" },
+    { num: "3", texto: "Evite assistir vídeos em alta qualidade enquanto estuda" },
+    { num: "4", texto: "Feche abas desnecessárias do navegador" },
+    { num: "5", texto: "Prefira a rede 2.4 GHz (tem maior alcance)" },
+    { num: "6", texto: "Ative o Modo Avião por 10 segundos e reconecte" }
+];
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+function carregarDicas() {
+    const container = document.getElementById('dicas-container');
+    container.innerHTML = '';
+
+    dicas.forEach(dica => {
+        const div = document.createElement('div');
+        div.className = 'dica';
+        div.innerHTML = `
+            <div class="dica-number">${dica.num}</div>
+            <span>${dica.texto}</span>
+        `;
+        container.appendChild(div);
+    });
 }
 
-body {
-    font-family: 'Segoe UI', system-ui, sans-serif;
-    background: linear-gradient(135deg, #0f172a 0%, #1e2937 100%);
-    color: #e2e8f0;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    line-height: 1.5;
+function recarregarPagina() {
+    window.location.reload();
 }
 
-.container {
-    max-width: 680px;
-    background: rgba(15, 23, 42, 0.97);
-    border-radius: 28px;
-    padding: 50px 40px;
-    text-align: center;
-    box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.75);
-    border: 1px solid #334155;
-    backdrop-filter: blur(12px);
+function testarVelocidade() {
+    const btn = document.querySelector('.btn.secondary');
+    const textoOriginal = btn.innerHTML;
+
+    btn.innerHTML = '🔄 Testando conexão...';
+    btn.disabled = true;
+
+    setTimeout(() => {
+        alert("📊 Teste simulado realizado!\n\nVelocidade aproximada: 1.8 ~ 3.5 Mbps\n\nDica extra: Tente se aproximar mais do roteador.");
+        btn.innerHTML = textoOriginal;
+        btn.disabled = false;
+    }, 1600);
 }
 
-.wifi-header {
-    margin-bottom: 25px;
-}
-
-.wifi-icon {
-    font-size: 8rem;
-    margin-bottom: 10px;
-    display: block;
-    animation: wifiPulse 4s infinite ease-in-out;
-    filter: drop-shadow(0 0 25px #60a5fa);
-}
-
-.signal-bar {
-    display: flex;
-    justify-content: center;
-    gap: 6px;
-    margin: 10px 0 30px;
-}
-
-.bar {
-    width: 12px;
-    background: #334155;
-    border-radius: 9999px;
-    animation: signalAnim 1.8s infinite ease-in-out;
-}
-
-.bar:nth-child(2) { height: 18px; animation-delay: 0.2s; }
-.bar:nth-child(3) { height: 28px; animation-delay: 0.4s; }
-.bar:nth-child(4) { height: 38px; animation-delay: 0.6s; background: #60a5fa; }
-
-@keyframes wifiPulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.06); }
-}
-
-@keyframes signalAnim {
-    0%, 100% { opacity: 0.4; }
-    50% { opacity: 1; }
-}
-
-h1 {
-    font-size: 2.8rem;
-    font-weight: 700;
-    margin-bottom: 14px;
-    background: linear-gradient(to right, #60a5fa, #a5b4fc);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.subtitle {
-    font-size: 1.32rem;
-    color: #94a3b8;
-    margin-bottom: 35px;
-}
-
-.dicas {
-    text-align: left;
-    margin-bottom: 40px;
-}
-
-.dica {
-    background: rgba(30, 41, 59, 0.9);
-    padding: 19px 24px;
-    margin-bottom: 16px;
-    border-radius: 18px;
-    border-left: 7px solid #3b82f6;
-    display: flex;
-    align-items: flex-start;
-    gap: 16px;
-    transition: all 0.4s ease;
-}
-
-.dica:hover {
-    transform: translateX(15px);
-    background: rgba(51, 65, 85, 0.95);
-    box-shadow: 0 12px 20px rgba(59, 130, 246, 0.25);
-}
-
-.dica-number {
-    background: #1e2937;
-    color: #60a5fa;
-    min-width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 700;
-    font-size: 1.2rem;
-    flex-shrink: 0;
-}
-
-.actions {
-    display: flex;
-    gap: 16px;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin-bottom: 30px;
-}
-
-.btn {
-    padding: 16px 36px;
-    border: none;
-    border-radius: 50px;
-    font-size: 1.1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.4s ease;
-    min-width: 200px;
-}
-
-.btn.primary {
-    background: linear-gradient(90deg, #3b82f6, #60a5fa);
-    color: white;
-    box-shadow: 0 10px 25px rgba(59, 130, 246, 0.4);
-}
-
-.btn.primary:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 35px rgba(59, 130, 246, 0.55);
-}
-
-.btn.secondary {
-    background: transparent;
-    color: #93c5fd;
-    border: 2px solid #60a5fa;
-}
-
-.btn.secondary:hover {
-    background: rgba(96, 165, 250, 0.15);
-    transform: translateY(-3px);
-}
-
-.footer {
-    color: #64748b;
-    font-size: 0.98rem;
-    padding-top: 25px;
-    border-top: 1px solid #334155;
-}
-
-/* Responsivo */
-@media (max-width: 540px) {
-    .container { padding: 40px 25px; }
-    h1 { font-size: 2.3rem; }
-    .wifi-icon { font-size: 6.5rem; }
-    .actions { flex-direction: column; align-items: center; }
-}
+// Inicia ao carregar a página
+window.onload = carregarDicas;
